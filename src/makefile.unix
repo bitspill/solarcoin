@@ -140,10 +140,10 @@ OBJS= \
     obj/scrypt-arm.o \
     obj/scrypt-x86.o \
     obj/scrypt-x86_64.o \
-    zmq/zmqabstractnotifier.o \
-    zmq/zmqconfig.o \
-    zmq/zmqnotificationinterface.o \
-    zmq/zmqpublishnotifier.o
+    obj/zmqabstractnotifier.o \
+    obj/zmqconfig.o \
+    obj/zmqnotificationinterface.o \
+    obj/zmqpublishnotifier.o
 
 all: solarcoind
 

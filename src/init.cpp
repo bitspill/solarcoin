@@ -25,7 +25,7 @@
 #include <signal.h>
 #endif
 
-#include "zmq/zmqnotificationinterface.h"
+#include "zmqnotificationinterface.h"
 
 using namespace std;
 using namespace boost;
