@@ -6,8 +6,8 @@
 #include "zmqpublishnotifier.h"
 
 #include "version.h"
-#include "validation.h"
-#include "streams.h"
+//#include "validation.h"
+//#include "streams.h"
 #include "util.h"
 
 void zmqError(const char *str)
