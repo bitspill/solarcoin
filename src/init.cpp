@@ -25,6 +25,7 @@
 #include <signal.h>
 #endif
 
+#include "zmq/zmqnotificationinterface.h"
 
 using namespace std;
 using namespace boost;
@@ -39,6 +40,8 @@ unsigned int nDerivationMethodIndex;
 unsigned int nMinerSleep;
 bool fUseFastIndex;
 enum Checkpoints::CPMode CheckpointsMode;
+
+static CZMQNotificationInterface* pzmqNotificationInterface = NULL;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -71,6 +74,14 @@ void Shutdown(void* parg)
 
     // Make this thread recognisable as the shutdown thread
     RenameThread("solarcoin-shutoff");
+
+    if (pzmqNotificationInterface)
+    {
+        UnregisterValidationInterface(pzmqNotificationInterface); // ToDo: bitspill
+        pzmqNotificationInterface->Shutdown();
+        delete pzmqNotificationInterface;
+        pzmqNotificationInterface = NULL;
+    }
 
     bool fFirstThread = false;
     {
@@ -422,6 +433,12 @@ std::string HelpMessage()
         "  -checkblocks=<n>       " + _("How many blocks to check at startup (default: 500, 0 = all)") + "\n" +
         "  -checklevel=<n>        " + _("How thorough the block verification is (0-6, default: 1)") + "\n" +
         "  -loadblock=<file>      " + _("Imports blocks from external blk000?.dat file") + "\n" +
+
+        "\n" + _("ZeroMQ notification options:") + "\n" +
+        "  -zmqpubhashblock=<address>        " + _("Enable publish hash block in <address>") + "\n" +
+        "  -zmqpubhashtransaction=<address>  " + _("Enable publish hash transaction in <address>") + "\n" +
+        "  -zmqpubrawblock=<address>         " + _("Enable publish raw block in <address>") + "\n" +
+        "  -zmqpubrawtransaction=<address>   " + _("Enable publish raw transaction in <address>") + "\n" +
 
         "\n" + _("Block creation options:") + "\n" +
         "  -blockminsize=<n>      "   + _("Set minimum block size in bytes (default: 0)") + "\n" +
@@ -816,6 +833,13 @@ bool AppInit2()
 
     BOOST_FOREACH(string strDest, mapMultiArgs["-seednode"])
         AddOneShot(strDest);
+
+     pzmqNotificationInterface = CZMQNotificationInterface::CreateWithArguments(mapArgs);
+
+     if (pzmqNotificationInterface) {
+         pzmqNotificationInterface->Initialize();
+         RegisterValidationInterface(pzmqNotificationInterface);
+     }
 
     // ********************************************************* Step 7: load blockchain
 

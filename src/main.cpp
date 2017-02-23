@@ -15,6 +15,7 @@
 #include "ui_interface.h"
 #include "kernel.h"
 #include "bitcoinrpc.h"
+#include "validationinterface.h"
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
@@ -153,6 +154,8 @@ void SyncWithWallets(const CTransaction& tx, const CBlock* pblock, bool fUpdate,
 
     BOOST_FOREACH(CWallet* pwallet, setpwalletRegistered)
         pwallet->AddToWalletIfInvolvingMe(tx, pblock, fUpdate);
+
+    GetMainSignals().SyncTransaction(tx, pblock);
 }
 
 // notify wallets about a new best chain
@@ -2328,12 +2331,17 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
             strMiscWarning = _("Warning: This version is obsolete, upgrade required!");
     }
 
-    std::string strCmd = GetArg("-blocknotify", "");
-
-    if (!fIsInitialDownload && !strCmd.empty())
+    if (!fIsInitialDownload)
     {
-        boost::replace_all(strCmd, "%s", hashBestChain.GetHex());
-        boost::thread t(runCommand, strCmd); // thread runs free
+        // Send notification of new block tip
+        GetMainSignals().UpdatedBlockTip(hashBestChain)
+
+        std::string strCmd = GetArg("-blocknotify", "");
+        if (!strCmd.empty())
+        {
+            boost::replace_all(strCmd, "%s", hashBestChain.GetHex());
+            boost::thread t(runCommand, strCmd); // thread runs free
+        }
     }
 
     return true;
