@@ -19,7 +19,7 @@ public:
 
     static CZMQNotificationInterface* Create();
 
-protected:
+//protected:
     bool Initialize();
     void Shutdown();
 
