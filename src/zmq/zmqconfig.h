@@ -17,7 +17,7 @@
 #endif
 
 // For CBlock and CTransaction primitives
-#include "main.h"
+#include "../main.h"
 
 void zmqError(const char *str);
 
