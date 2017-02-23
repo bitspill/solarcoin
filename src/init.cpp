@@ -834,7 +834,7 @@ bool AppInit2()
     BOOST_FOREACH(string strDest, mapMultiArgs["-seednode"])
         AddOneShot(strDest);
 
-     pzmqNotificationInterface = CZMQNotificationInterface::CreateWithArguments(mapArgs);
+     pzmqNotificationInterface = CZMQNotificationInterface::Create();
 
      if (pzmqNotificationInterface) {
          pzmqNotificationInterface->Initialize();

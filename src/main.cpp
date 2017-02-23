@@ -2334,7 +2334,7 @@ bool CBlock::SetBestChain(CTxDB& txdb, CBlockIndex* pindexNew)
     if (!fIsInitialDownload)
     {
         // Send notification of new block tip
-        GetMainSignals().UpdatedBlockTip(hashBestChain)
+        GetMainSignals().UpdatedBlockTip(hashBestChain);
 
         std::string strCmd = GetArg("-blocknotify", "");
         if (!strCmd.empty())
