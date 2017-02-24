@@ -140,8 +140,8 @@ OBJS= \
     obj/scrypt-arm.o \
     obj/scrypt-x86.o \
     obj/scrypt-x86_64.o \
+    obj/validationinterface.o \
     obj/zmqabstractnotifier.o \
-    obj/zmqconfig.o \
     obj/zmqnotificationinterface.o \
     obj/zmqpublishnotifier.o
 
@@ -181,6 +181,9 @@ obj/%.o: %.cpp
 
 solarcoind: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
+
+boostfix:
+	sed -i 's/<const\ CScriptID\&/<CScriptID/' rpcrawtransaction.cpp
 
 clean:
 	-rm -f solarcoind
