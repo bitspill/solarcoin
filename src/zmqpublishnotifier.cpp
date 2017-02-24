@@ -3,6 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 //#include "chainparams.h"
+#include "common.h"
 //#include "streams.h"
 #include "zmqpublishnotifier.h"
 //#include "validation.h"
