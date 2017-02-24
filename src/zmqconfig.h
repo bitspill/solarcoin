@@ -12,12 +12,10 @@
 #include <stdarg.h>
 #include <string>
 
-#if ENABLE_ZMQ
 #include <zmq.h>
-#endif
 
 // For CBlock and CTransaction primitives
-#include "../main.h"
+#include "main.h"
 
 void zmqError(const char *str);
 
