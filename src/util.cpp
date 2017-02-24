@@ -595,7 +595,6 @@ void ParseParameters(int argc, const char* const argv[])
 
 bool IsArgSet(const std::string& strArg)
 {
-    LOCK(cs_args);
     return mapArgs.count(strArg);
 }
 
