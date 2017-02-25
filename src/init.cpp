@@ -837,7 +837,7 @@ bool AppInit2()
      pzmqNotificationInterface = CZMQNotificationInterface::Create();
 
      if (pzmqNotificationInterface) {
-         pzmqNotificationInterface->Initialize();
+         // pzmqNotificationInterface->Initialize();
          RegisterValidationInterface(pzmqNotificationInterface);
      }
 
