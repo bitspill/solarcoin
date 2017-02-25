@@ -77,8 +77,8 @@ void Shutdown(void* parg)
 
     if (pzmqNotificationInterface)
     {
-        UnregisterValidationInterface(pzmqNotificationInterface); // ToDo: bitspill
-        pzmqNotificationInterface->Shutdown();
+        UnregisterValidationInterface(pzmqNotificationInterface);
+        //pzmqNotificationInterface->Shutdown();
         delete pzmqNotificationInterface;
         pzmqNotificationInterface = NULL;
     }
