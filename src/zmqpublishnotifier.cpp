@@ -162,7 +162,7 @@ bool CZMQPublishHashTransactionNotifier::NotifyTransaction(const CTransaction &t
     return SendMessage(MSG_HASHTX, data, 32);
 }
 
-bool CZMQPublishRawBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
+bool CZMQPublishRawBlockNotifier::NotifyBlock(const uint256 &hash)
 {
     OutputDebugStringF("zmq: Publish rawblock %s\n", pindex->GetBlockHash().GetHex().c_str());
 

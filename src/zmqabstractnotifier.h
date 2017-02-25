@@ -32,7 +32,7 @@ public:
     virtual bool Initialize(void *pcontext) = 0;
     virtual void Shutdown() = 0;
 
-    virtual bool NotifyBlock(const CBlockIndex *pindex);
+    virtual bool NotifyBlock(const uint256 &hash);
     virtual bool NotifyTransaction(const CTransaction &transaction);
 
 protected:

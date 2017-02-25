@@ -31,7 +31,7 @@ public:
 class CZMQPublishHashBlockNotifier : public CZMQAbstractPublishNotifier
 {
 public:
-    bool NotifyBlock(const CBlockIndex *pindex);
+    bool NotifyBlock(const uint256 &hash);
 };
 
 class CZMQPublishHashTransactionNotifier : public CZMQAbstractPublishNotifier
@@ -43,7 +43,7 @@ public:
 class CZMQPublishRawBlockNotifier : public CZMQAbstractPublishNotifier
 {
 public:
-    bool NotifyBlock(const CBlockIndex *pindex);
+    bool NotifyBlock(const uint256 &hash);
 };
 
 class CZMQPublishRawTransactionNotifier : public CZMQAbstractPublishNotifier
