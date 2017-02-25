@@ -164,13 +164,13 @@ bool CZMQPublishHashTransactionNotifier::NotifyTransaction(const CTransaction &t
 
 bool CZMQPublishRawBlockNotifier::NotifyBlock(const uint256 &hash)
 {
-    OutputDebugStringF("zmq: Publish rawblock %s\n", pindex->GetBlockHash().GetHex().c_str());
+    OutputDebugStringF("zmq: Publish rawblock %s\n", hash.GetHex().c_str());
 
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     {
         LOCK(cs_main);
         CBlock block;
-        if(!block.ReadFromDisk(pindex))
+        if(!block.ReadFromDisk(0 /*pindex*/)) // ToDo: bitspill!!
         {
             zmqError("Can't read block from disk");
             return false;
