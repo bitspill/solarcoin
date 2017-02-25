@@ -143,9 +143,8 @@ bool CZMQAbstractPublishNotifier::SendMessage(const char *command, const void* d
     return true;
 }
 
-bool CZMQPublishHashBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
+bool CZMQPublishHashBlockNotifier::NotifyBlock(const uint256 &hash)
 {
-    uint256 hash = pindex->GetBlockHash();
     OutputDebugStringF("zmq: Publish hashblock %s\n", hash.GetHex().c_str());
     char data[32];
     for (unsigned int i = 0; i < 32; i++)
