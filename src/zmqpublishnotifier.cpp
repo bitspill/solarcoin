@@ -87,7 +87,7 @@ bool CZMQAbstractPublishNotifier::Initialize(void *pcontext)
     }
     else
     {
-        OutputDebugStringF("zmq: Reusing socket for address %s\n", address);
+        OutputDebugStringF("zmq: Reusing socket for address %s\n", address.c_str());
 
         psocket = i->second->psocket;
         mapPublishNotifiers.insert(std::make_pair(address, this));
@@ -117,7 +117,7 @@ void CZMQAbstractPublishNotifier::Shutdown()
 
     if (count == 1)
     {
-        OutputDebugStringF("Close socket at address %s\n", address);
+        OutputDebugStringF("Close socket at address %s\n", address.c_str());
         int linger = 0;
         zmq_setsockopt(psocket, ZMQ_LINGER, &linger, sizeof(linger));
         zmq_close(psocket);
@@ -146,7 +146,7 @@ bool CZMQAbstractPublishNotifier::SendMessage(const char *command, const void* d
 bool CZMQPublishHashBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 {
     uint256 hash = pindex->GetBlockHash();
-    OutputDebugStringF("zmq: Publish hashblock %s\n", hash.GetHex());
+    OutputDebugStringF("zmq: Publish hashblock %s\n", hash.GetHex().c_str());
     char data[32];
     for (unsigned int i = 0; i < 32; i++)
         data[31 - i] = hash.begin()[i];
@@ -156,7 +156,7 @@ bool CZMQPublishHashBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 bool CZMQPublishHashTransactionNotifier::NotifyTransaction(const CTransaction &transaction)
 {
     uint256 hash = transaction.GetHash();
-    OutputDebugStringF("zmq: Publish hashtx %s\n", hash.GetHex());
+    OutputDebugStringF("zmq: Publish hashtx %s\n", hash.GetHex().c_str());
     char data[32];
     for (unsigned int i = 0; i < 32; i++)
         data[31 - i] = hash.begin()[i];
@@ -165,7 +165,7 @@ bool CZMQPublishHashTransactionNotifier::NotifyTransaction(const CTransaction &t
 
 bool CZMQPublishRawBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 {
-    OutputDebugStringF("zmq: Publish rawblock %s\n", pindex->GetBlockHash().GetHex());
+    OutputDebugStringF("zmq: Publish rawblock %s\n", pindex->GetBlockHash().GetHex().c_str());
 
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     {
@@ -186,7 +186,7 @@ bool CZMQPublishRawBlockNotifier::NotifyBlock(const CBlockIndex *pindex)
 bool CZMQPublishRawTransactionNotifier::NotifyTransaction(const CTransaction &transaction)
 {
     uint256 hash = transaction.GetHash();
-    OutputDebugStringF("zmq: Publish rawtx %s\n", hash.GetHex());
+    OutputDebugStringF("zmq: Publish rawtx %s\n", hash.GetHex().c_str());
     CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
     ss << transaction;
     return SendMessage(MSG_RAWTX, &(*ss.begin()), ss.size());

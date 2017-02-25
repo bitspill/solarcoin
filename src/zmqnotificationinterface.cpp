@@ -89,11 +89,11 @@ bool CZMQNotificationInterface::Initialize()
         CZMQAbstractNotifier *notifier = *i;
         if (notifier->Initialize(pcontext))
         {
-            OutputDebugStringF("  Notifier %s ready (address = %s)\n", notifier->GetType(), notifier->GetAddress());
+            OutputDebugStringF("  Notifier %s ready (address = %s)\n", notifier->GetType().c_str(), notifier->GetAddress().c_str());
         }
         else
         {
-            OutputDebugStringF("  Notifier %s failed (address = %s)\n", notifier->GetType(), notifier->GetAddress());
+            OutputDebugStringF("  Notifier %s failed (address = %s)\n", notifier->GetType().c_str(), notifier->GetAddress().c_str());
             break;
         }
     }
@@ -115,7 +115,7 @@ void CZMQNotificationInterface::Shutdown()
         for (std::list<CZMQAbstractNotifier*>::iterator i=notifiers.begin(); i!=notifiers.end(); ++i)
         {
             CZMQAbstractNotifier *notifier = *i;
-            OutputDebugStringF("   Shutdown notifier %s at %s\n", notifier->GetType(), notifier->GetAddress());
+            OutputDebugStringF("   Shutdown notifier %s at %s\n", notifier->GetType().c_str(), notifier->GetAddress().c_str());
             notifier->Shutdown();
         }
         zmq_ctx_destroy(pcontext);
