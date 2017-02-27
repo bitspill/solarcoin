@@ -170,7 +170,8 @@ bool CZMQPublishRawBlockNotifier::NotifyBlock(const uint256 &hash)
     {
         LOCK(cs_main);
         CBlock block;
-        if(!block.ReadFromDisk(0 /*pindex*/)) // ToDo: bitspill!!
+        CBlockIndex* pblockindex = mapBlockIndex[hash];
+        if(!block.ReadFromDisk(pindex, true))
         {
             zmqError("Can't read block from disk");
             return false;
