@@ -25,7 +25,7 @@ public:
 
     // CValidationInterface
     void SyncTransaction(const CTransaction& tx, const CBlock* block);
-    void UpdatedBlockTip(const CBlockIndex *pindexNew);
+    void UpdatedBlockTip(const uint256 &tipHash);
 
 private:
     CZMQNotificationInterface();
