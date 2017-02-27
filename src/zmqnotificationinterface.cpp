@@ -126,7 +126,6 @@ void CZMQNotificationInterface::Shutdown()
 
 void CZMQNotificationInterface::UpdatedBlockTip(const uint256 &tipHash)
 {
-    OutputDebugStringF("zmq: Interface UpdateBlockTip");
     for (std::list<CZMQAbstractNotifier*>::iterator i = notifiers.begin(); i!=notifiers.end(); )
     {
         CZMQAbstractNotifier *notifier = *i;
