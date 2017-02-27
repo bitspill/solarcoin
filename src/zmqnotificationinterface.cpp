@@ -142,7 +142,7 @@ void CZMQNotificationInterface::UpdatedBlockTip(const uint256 &tipHash)
     }
 }
 
-void CZMQNotificationInterface::SyncTransaction(const CTransaction& tx, const CBlockIndex* pindex, int posInBlock)
+void CZMQNotificationInterface::SyncTransaction(const CTransaction& tx, const CBlock* block)
 {
     for (std::list<CZMQAbstractNotifier*>::iterator i = notifiers.begin(); i!=notifiers.end(); )
     {

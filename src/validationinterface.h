@@ -31,7 +31,7 @@ void SyncWithWallets(const CTransaction& tx, const CBlock* pblock = NULL);
 class CValidationInterface {
 protected:
     virtual void UpdatedBlockTip(const uint256 &newHashTip) {}
-    virtual void SyncTransaction(const CTransaction &tx, const CBlock *pblock) {}
+    virtual void SyncTransaction(const CTransaction &tx, const CBlock* pblock) {}
     friend void ::RegisterValidationInterface(CValidationInterface*);
     friend void ::UnregisterValidationInterface(CValidationInterface*);
     friend void ::UnregisterAllValidationInterfaces();
